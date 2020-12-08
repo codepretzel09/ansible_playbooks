@@ -1,0 +1,46 @@
+---
+ - name: install httpd and php packages 
+   tags: apache,redhat,httpd
+   dnf:
+     name:
+      - "{{ apache_package }}"
+      - "{{ php_package }}"
+     state: latest
+   when: ansible_distribution == "RedHat"
+ 
+ - name: start and enable httpd 
+   tags: apache,redhat,httpd
+   service:
+     name: "{{ apache_package }}"
+     state: started
+     enabled: yes
+   when: ansible_distribution == "RedHat"
+ 
+ - name: change e-mail address for admin
+   tags: apache,redhat,httpd
+   lineinfile:
+     path: /etc/httpd/conf/httpd.conf
+     regexp: '^ServerAdmin'
+     line: ServerAdmin somebody@somewhere.com
+   when: ansible_distribution == "RedHat"
+   notify: restart_apache  
+ 
+ - name: copy default files for site
+   tags: apache,httpd
+   copy:
+      src: /html/httpdconf.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+ - name: enable port 80
+   firewalld:
+    service: http
+    permanent: true
+    state: enabled
+   
+ - name: reload service firewalld
+   systemd:
+      name: firewalld
+      state: reloaded

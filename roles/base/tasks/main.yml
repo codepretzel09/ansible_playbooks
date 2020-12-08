@@ -1,0 +1,22 @@
+---
+ - name: add ssh key for sysadmin
+   tags: always
+   authorized_key:
+      user: sysadmin
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDf0OScVI7f2ZEpxSMD4Y/Wdstm1T+URukQFVuHVnKECf37/ggjznBqJg10efl727yyBiruvVP1pwibRU9qsBArcd2NjiJL6FzvJo6h+k3VaoNJ1Zhc/uKyDhqeLA0IViJ/oPD60SojdxCKOgDBNusIQaLEfTaap22n1rsAvpA5IJI+O0R0usOujmBRsAlruPDizP5/gn7OIRxTfQJREXjZI7OrZNlZXpt1jDaomEvMWc2uGdEcimKSDTtPm/+iJK4X42P6P+9AmxRTx9hwsWs2XJGfwYt6jWxkh8aXb/AO+P53p1EauC58wW7GoOCukayQ4v+mCWDwj9TlvX4shlj4pepPIhRxwde2/s2o2uU+QlPFHPV1Ycb+ov4nXOIHIHE9fDKEfqFxE4+jJq2whKN5TmKxU2MeBh5zFfXYgJBso7q3izEJapqyEXFA0Fgw6MYg2zIi2MqGqyWmESCmMsWGc+wyaQ7+m3nyq3BcW1bw8T7zeDVAoSFMGcuCG92iQNU="
+
+ - name: generate sshd_config file from template
+   tags: ssh
+   template:
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+   notify: restart_sshd
+
+ - name: Change SELinux mode to permissive
+   become: yes
+   selinux:
+    policy: targeted
+    state: permissive

@@ -1,0 +1,5 @@
+---
+my_var: 'server-2'
+apache_package: 'httpd' 
+php_package: 'php'
+ssh_template_file: sshd_config_redhat.j2

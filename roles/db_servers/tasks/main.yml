@@ -1,0 +1,7 @@
+---
+ - name: install mariadb server package
+   tags: centos,db,mariadb
+   dnf:
+     name: mariadb
+     state: latest
+   when: ansible_distribution == "RedHat"

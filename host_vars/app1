@@ -1,0 +1,6 @@
+---
+my_var: 'server-1'
+apache_package: 'httpd' 
+php_package: 'php'
+ssh_template_file: sshd_config_redhat.j2
+secret_pass: "71Y2jrIlk2Qun96zERng!@#@!sad2"

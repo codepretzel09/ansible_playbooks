@@ -1,0 +1,7 @@
+---
+my_var: 'server-4'
+ansible_ssh_user: root
+
+#sensitive data
+ansible_ssh_pass: "{{ vault_ansible_ssh_pass }}"
+ssh_template_file: sshd_config_redhat.j2

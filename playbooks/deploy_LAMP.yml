@@ -1,0 +1,36 @@
+---
+# Deploy LAMP / copy files / open ports / restart services
+- hosts: all
+  become: true
+  tasks:
+  pre_tasks:
+
+  - name: update repo cache
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "RedHat"
+
+- hosts: all
+  become: true
+  roles:
+     - base
+  
+- hosts: web_servers
+  become: true
+  roles:
+     - web_servers
+ 
+- hosts: db_servers
+  become: true
+  roles:
+     - db_servers
+ 
+- hosts: file_servers
+  become: true
+  roles:
+     - file_servers
+
+
+

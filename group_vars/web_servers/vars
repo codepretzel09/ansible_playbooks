@@ -1,0 +1,10 @@
+---
+apache_package: 'httpd' 
+php_package: 'php'
+apache_service: 'httpd'
+ssh_users: "root sysadmin"
+ssh_template_file: sshd_config_redhat.j2
+
+
+
+secret_pass: "{{ vault_repo_pass }}"

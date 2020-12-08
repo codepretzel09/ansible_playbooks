@@ -1,0 +1,6 @@
+---
+my_var: 'server-4'
+ansible_ssh_user: root
+
+#sensitive data
+ansible_ssh_pass: "{{ vault_ansible_ssh_pass }}"
