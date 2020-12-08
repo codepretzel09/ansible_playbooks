@@ -1,0 +1,39 @@
+---
+- hosts: app2
+  gather_facts: no
+
+  vars:
+    - user_name: user_example
+
+
+  tasks:
+    - name: Install common software  
+      dnf:
+        pkg: ['git', 'vim', 'unzip', 'curl','sudo']
+     
+    - name: Create sudo group
+      group:
+        name: sudo
+        state: present
+
+    - name: Create new user
+      user:
+        name: "{{user_name}}"
+        state: present
+        groups: "sudo"
+        shell: /bin/bash
+        password: $6$c765g1aEe5rJ0rqE$h5BbLGNyBDZe/P2FVeFFO6SpVv11Qtj5v9DGAamnqeeICdRX639WYTvwKPj2ntvQ/3N4chcVUMlbGi9ou1Qdx/
+
+    - name:
+      file:
+        path: /home/{{ user_name }}/{{ item }}
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+        mode: 0770
+      loop:
+        - src
+        - backups
+        - bin
+        - tmp
+      
