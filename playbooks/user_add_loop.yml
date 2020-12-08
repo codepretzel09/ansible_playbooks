@@ -1,0 +1,14 @@
+---
+- hosts: web_servers
+  gather_facts: no
+  become: true
+  vars_files:
+      - /etc/ansible/group_vars/web_servers/vars.yml
+  tasks:
+      - name: more complex items to add several users
+        user:
+         name: "{{ item.name }}"
+         uid: "{{ item.uid }}"
+         groups: "{{ item.groups }}"
+         state: present
+        with_items: "{{ user_details }}"

@@ -8,3 +8,7 @@ ssh_template_file: sshd_config_redhat.j2
 
 
 secret_pass: "{{ vault_repo_pass }}"
+
+user_details:
+    - {name: 'test_user_1', uid: 3002, groups: ['admin', 'logs']}
+    - {name: 'test_user_2', uid: 3003, groups: ['logs']}
